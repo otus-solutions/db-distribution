@@ -1,0 +1,51 @@
+version: '3'
+networks:
+  db-distribuition-net:
+services:
+  otus-db-distribuition-database:
+    build:
+      context: mongodb
+      dockerfile: Dockerfile
+    container_name: otus-db-distribuition-database
+    hostname: otus-db-distribuition-database
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb/persistence/mongoData:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=XRYs9yjU
+    networks:
+      - db-distribuition-net
+  otus-db-distribuition-api:
+    build:
+      context: nodejs
+      dockerfile: Dockerfile
+    container_name: otus-db-distribuition-api
+    restart: always
+    depends_on:
+      - otus-db-distribuition-database
+    links:
+      - otus-db-distribuition-database
+    ports:
+      - 8080:8080
+    env_file:
+      - ./nodejs/.env
+    networks:
+      - db-distribuition-net
+  otus-db-distribuition:
+    container_name: otus-db-distribuition
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - otus-db-distribuition-api
+    links:
+      - otus-db-distribuition-api
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - db-distribuition-net
