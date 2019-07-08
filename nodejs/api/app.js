@@ -17,7 +17,8 @@ const options = {
     useNewUrlParser: true,
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 500,
-    connectTimeoutMS: 10000,
+    socketTimeoutMS: 0,
+    connectTimeoutMS: 0 ,
     keepAlive: 1,
     auth: {
         user: MONGO_USERNAME || "root",
@@ -25,7 +26,7 @@ const options = {
     }
 };
 
-const url = `mongodb://${MONGO_HOSTNAME || "localhost"}:${MONGO_PORT || "27017"}/${MONGO_DB || "database-distribution'"}?authSource=admin`;
+const url = `mongodb://${MONGO_HOSTNAME || "localhost"}:${MONGO_PORT || "27017"}/${MONGO_DB || "database-distribution"}?authSource=admin`;
 
 connect();
 
