@@ -1,4 +1,3 @@
-const path = require('path');
 const {exec} = require('child_process');
 const fs = require('fs');
 
@@ -39,21 +38,6 @@ module.exports = function (application) {
             }).catch((e)=>{
                 console.log(e);
                 throw Response.internalServerError();
-            });
-        },
-        validateFileContainer(fileContainer){
-            return new Promise(function (resolve, reject) {
-                let errorMessage;
-                if(!fileContainer.databaseJson){
-                    errorMessage = "The databaseJson field is required";
-                } else if(path.extname(fileContainer.databaseJson[0].originalname) !== ".json"){
-                    errorMessage = "Invalid File Type. Only JSON files are allowed";
-                }
-                if (errorMessage){
-                    reject(Response.notAcceptable({data:"The databaseJson field is required"}));
-                } else {
-                    resolve(fileContainer.databaseJson[0])
-                }
             });
         }
     };

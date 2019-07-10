@@ -1,11 +1,12 @@
 module.exports = function (application) {
     const StaticDatabaseService = application.app.services.StaticDatabaseService;
+    const VariableTypeCorrelationService = application.app.services.VariableTypeCorrelationService;
     return{
-        uploadDatabase(databaseCSV, variableTypeCorrelationCSV) {
-            return StaticDatabaseService.uploadDatabase(databaseCSV, variableTypeCorrelationCSV);
+        uploadDatabase(databaseJson) {
+            return StaticDatabaseService.uploadDatabase(databaseJson);
         },
-        validateDatabaseFile(fileContainer) {
-            return StaticDatabaseService.validateFileContainer(fileContainer);
+        uploadVariableTypeCorrelation(variableTypeCorrelationJson) {
+            return VariableTypeCorrelationService.uploadVariableTypeCorrelation(variableTypeCorrelationJson);
         }
     };
 };
