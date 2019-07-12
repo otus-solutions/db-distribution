@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 module.exports.correctCurrentVariables = () => {
     let db = mongoose.connection.db;
     let promises = [];
-    let currentVariablesCollection = db.collection("current_variables");
+    let currentVariablesCollection = db.collection('current_variables');
     return new Promise(function (resolve, reject) {
         currentVariablesCollection.aggregate([
                 {
                     $addFields: {
-                        uploadDate: {$toDate: "$_id"}
+                        uploadDate: {$toDate: '$_id'}
                     }
                 },
                 {
@@ -16,8 +16,8 @@ module.exports.correctCurrentVariables = () => {
                 },
                 {
                     $group: {
-                        _id: {variable: "$variable", id: "$id"},
-                        oldValues: {$push: "$$ROOT"}
+                        _id: {variable: '$variable', id: '$id'},
+                        oldValues: {$push: '$$ROOT'}
                     }
                 },
                 {
@@ -27,12 +27,12 @@ module.exports.correctCurrentVariables = () => {
                     $project: {
                         oldValues: {
                             $slice: [
-                                "$oldValues",
+                                '$oldValues',
                                 0,
                                 {
-                                    "$subtract": [
+                                    '$subtract': [
                                         {
-                                            "$size": "$oldValues"
+                                            '$size': '$oldValues'
                                         },
                                         1
                                     ]
@@ -42,18 +42,18 @@ module.exports.correctCurrentVariables = () => {
                     }
                 },
                 {
-                    $unwind: "$oldValues"
+                    $unwind: '$oldValues'
                 },
                 {
                     $group: {
-                        _id: "$_id",
-                        removeOldVariables: {$push: "$oldValues._id"},
+                        _id: '$_id',
+                        removeOldVariables: {$push: '$oldValues._id'},
                         insertOldVariables: {
                             $push: {
-                                "_id": "$oldValues._id",
-                                "identification": "$oldValues.id",
-                                "variable": "$oldValues.variable",
-                                "value": "$oldValues.value",
+                                '_id': '$oldValues._id',
+                                'identification': '$oldValues.id',
+                                'variable': '$oldValues.variable',
+                                'value': '$oldValues.value',
                             }
                         }
                     }
@@ -64,7 +64,7 @@ module.exports.correctCurrentVariables = () => {
             },
             (err, result) => {
                 if (err) reject(err);
-                let oldVariables = db.collection("old_variables");
+                let oldVariables = db.collection('old_variables');
                 result.toArray(async (toArrayErr, docs) => {
                     if (toArrayErr) {
                         reject(toArrayErr);
