@@ -1,4 +1,6 @@
 const multer  = require('multer');
+const { check, buildSanitizeFunction, validationResult } = require('express-validator');
+const sanitizeParam = buildSanitizeFunction(['params']);
 const upload = multer({ dest: 'uploads/' });
 
 module.exports = function(application) {
@@ -25,6 +27,22 @@ module.exports = function(application) {
         try {
             let variableTypeCorrelationJson = await validateFileContainer(req.files.variableTypeCorrelationJson, ".json");
             let result = await StaticDatabaseController.uploadVariableTypeCorrelation(variableTypeCorrelationJson);
+            res.status(result.code).send(result.body);
+        } catch (e){
+            res.status(e.code).send(e.body);
+        }
+    });
+
+    application.get('/variables/:variables', [
+        sanitizeParam('variables').customSanitizer((value, { req }) => {
+            return JSON.parse(value);
+        }),
+        check('variables').isArray()
+    ], async function(req, res) {
+        res.header('Content-Type', 'application/json');
+        const errors = validationResult(req);
+        try {
+            let result = await StaticDatabaseController.getVariables(req.params.variables);
             res.status(result.code).send(result.body);
         } catch (e){
             res.status(e.code).send(e.body);

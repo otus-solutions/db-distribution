@@ -39,6 +39,14 @@ module.exports = function (application) {
                 console.log(e);
                 throw Response.internalServerError();
             });
+        },
+        getVariables: async function (acronym, id, version) {
+            return endImport.then(()=>{
+                return Response.success();
+            }).catch((e)=>{
+                console.log(e);
+                throw Response.internalServerError();
+            });
         }
     };
 };
