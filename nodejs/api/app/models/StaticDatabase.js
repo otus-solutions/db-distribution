@@ -135,7 +135,8 @@ module.exports.getCurrentVariables = (identification, variables, variableNames) 
                 },
                 {
                     $project: {
-                        _id:0
+                        _id:0,
+                        identification:0
                     }
                 },
                 {
@@ -183,7 +184,11 @@ module.exports.getCurrentVariables = (identification, variables, variableNames) 
                     if (toArrayErr) {
                         reject(toArrayErr);
                     } else {
-                        resolve(docs[0].foundVariables);
+                        if (docs.length > 0){
+                            resolve(docs[0].foundVariables);
+                        } else {
+                            resolve([])
+                        }
                     }
                 })
             });
@@ -209,7 +214,8 @@ module.exports.getOldVariables = (identification, variables, variableNames) => {
                 {
                     $project: {
                         _id:0,
-                        sendingDate:0
+                        sendingDate:0,
+                        identification:0
                     }
                 },
                 {
@@ -257,7 +263,11 @@ module.exports.getOldVariables = (identification, variables, variableNames) => {
                     if (toArrayErr) {
                         reject(toArrayErr);
                     } else {
-                        resolve(docs[0].foundVariables);
+                        if (docs.length > 0){
+                            resolve(docs[0].foundVariables);
+                        } else {
+                            resolve([])
+                        }
                     }
                 })
             });

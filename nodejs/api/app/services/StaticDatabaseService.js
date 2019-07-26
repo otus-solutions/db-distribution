@@ -43,7 +43,7 @@ module.exports = function (application) {
         getVariables:async function (identification, variables) {
             try {
                 let foundVariables = await StaticDatabase.getVariables(identification, variables);
-                return Response.success({identification:identification,variables:foundVariables} )
+                return Response.success({variables:foundVariables} )
             } catch (e) {
                 console.log(e);
                 throw Response.internalServerError();
