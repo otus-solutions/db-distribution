@@ -35,7 +35,7 @@ module.exports = function(application) {
         }
     });
 
-    application.post('/api/variables', jsonParser ,[
+    application.post('/api/findVariables', jsonParser ,[
         body('variables').custom(value => {
             let error = false;
             value.forEach(variable=>{
