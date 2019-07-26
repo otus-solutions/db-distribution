@@ -1,6 +1,8 @@
 const multer  = require('multer');
-const { check, buildSanitizeFunction, validationResult } = require('express-validator');
-const sanitizeParam = buildSanitizeFunction(['params']);
+const { body, buildSanitizeFunction, validationResult } = require('express-validator');
+const sanitizeBody = buildSanitizeFunction(['body']);
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 const upload = multer({ dest: 'uploads/' });
 
 module.exports = function(application) {
@@ -33,19 +35,51 @@ module.exports = function(application) {
         }
     });
 
-    application.get('/variables/:variables', [
-        sanitizeParam('variables').customSanitizer((value, { req }) => {
-            return JSON.parse(value);
+    application.post('/api/variables', jsonParser ,[
+        body('variables').custom(value => {
+            let error = false;
+            value.forEach(variable=>{
+                if(!variable.name || !variable.sending){
+                    error = true;
+                }
+            });
+            if (error){
+                return Promise.reject();
+            } else {
+                return Promise.resolve();
+            }
         }),
-        check('variables').isArray()
+        sanitizeBody('variables').customSanitizer((value, { req }) => {
+            let correctedArray = [];
+            let resultErrors = validationResult(req);
+            if(resultErrors.errors.length === 0){
+                value.forEach(variable=>{
+                    correctedArray.push({
+                        name: variable.name.toString(),
+                        sending: variable.sending.toString(),
+                    })
+                });
+            }
+            return correctedArray;
+        }),
+        sanitizeBody('identification').customSanitizer((value, { req }) => {
+            if(value) {
+                return value.toString();
+            }
+        }),
+        body('identification').isString()
     ], async function(req, res) {
         res.header('Content-Type', 'application/json');
-        const errors = validationResult(req);
-        try {
-            let result = await StaticDatabaseController.getVariables(req.params.variables);
-            res.status(result.code).send(result.body);
-        } catch (e){
-            res.status(e.code).send(e.body);
+        let validation = validationResult(req);
+        if (validation.errors.length > 0){
+            res.status(406).send({data:"There are invalid fields in the request"});
+        } else {
+            try {
+                let result = await StaticDatabaseController.getVariables(req.body.identification,req.body.variables);
+                res.status(result.code).send(result.body);
+            } catch (e){
+                res.status(e.code).send(e.body);
+            }
         }
     });
 

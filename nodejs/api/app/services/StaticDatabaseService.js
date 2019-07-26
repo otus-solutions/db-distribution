@@ -40,13 +40,14 @@ module.exports = function (application) {
                 throw Response.internalServerError();
             });
         },
-        getVariables: async function (acronym, id, version) {
-            return endImport.then(()=>{
-                return Response.success();
-            }).catch((e)=>{
+        getVariables:async function (identification, variables) {
+            try {
+                let foundVariables = await StaticDatabase.getVariables(identification, variables);
+                return Response.success({identification:identification,variables:foundVariables} )
+            } catch (e) {
                 console.log(e);
                 throw Response.internalServerError();
-            });
+            }
         }
     };
 };
