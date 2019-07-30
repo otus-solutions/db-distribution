@@ -39,6 +39,15 @@ module.exports = function (application) {
                 console.log(e);
                 throw Response.internalServerError();
             });
+        },
+        getVariables:async function (identification, variables) {
+            try {
+                let foundVariables = await StaticDatabase.getVariables(identification, variables);
+                return Response.success({variables:foundVariables} )
+            } catch (e) {
+                console.log(e);
+                throw Response.internalServerError();
+            }
         }
     };
 };
