@@ -1,4 +1,4 @@
-# Otus Database Distribuition
+# Otus Database distribution
 
 Project to archive and control database distribution.
 
@@ -24,7 +24,7 @@ sudo docker-compose up -d --build
 
 If api communication problems occur with the database, run this command
 ```
-sudo docker restart otus-db-distribuition-api
+sudo docker restart otus-db-distribution-api
 ```
 
 To build just one of the containers, first navigate to the container folder and run
@@ -34,17 +34,17 @@ sudo docker build -t <image_name> .
 ```
 and MongoDB
 ```
-sudo docker run -p 27017:27017-v $(pwd)/persistence/mongoData:/data/db/ --name otus-db-distribuition-database <image_name>
+sudo docker run -p 27017:27017-v $(pwd)/persistence/mongoData:/data/db/ --name otus-db-distribution-database <image_name>
 ```
 
 and NodeJS
 ```
-sudo docker run -p 8080:8080 --env-file .env --name otus-db-distribuition-api <image_name>
+sudo docker run -p 8080:8080 --env-file .env --name otus-db-distribution-api <image_name>
 ```
 
 and NGINX
 ```
-sudo docker run -p 80:80 -p 443:443 --name otus-db-distribuition <image_name>
+sudo docker run -p 80:80 -p 443:443 --name otus-db-distribution <image_name>
 ```
 
 ## Running the tests
