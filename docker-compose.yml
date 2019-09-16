@@ -37,18 +37,3 @@ services:
       - MONGO_PORT=${MONGO_PORT-27017}
     networks:
       - db-distribution-net
-  otus-db-distribution:
-    container_name: otus-db-distribution
-    build:
-      context: nginx
-      dockerfile: Dockerfile
-    restart: always
-    depends_on:
-      - otus-db-distribution-api
-    links:
-      - otus-db-distribution-api
-    ports:
-      - 80:80
-      - 443:443
-    networks:
-      - db-distribution-net
