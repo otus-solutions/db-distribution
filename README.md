@@ -1,69 +1,11 @@
-# Otus Database distribution
+# DATABASE - BUILD IMAGE
+sudo docker build --target database -t db-database .
 
-Project to archive and control database distribution.
+# DATABASE - BUILD CONTAINER
+sudo docker run -v $(pwd)/persistence:/data/db --network=db-network -p 53001:27017 --name db-database db-database --wiredTigerCacheSizeGB='1.2'
 
-## Getting Started
+# API - BUILD IMAGE
+sudo docker build --target api -t db-api .
 
-This project uses feature made available in docker containers, its settings are defined in environment variables. By default the database must have a volume and the application must be in the API folder.
-
-### Prerequisites
-
-
-- docker
-- docker-compose
-
-
-### Installing
-
-To build the containers run the following command
-
-```
-sudo docker-compose up -d --build
-```
-
-
-If api communication problems occur with the database, run this command
-```
-sudo docker restart otus-db-distribution-api
-```
-
-To build just one of the containers, first navigate to the container folder and run
-
-```
-sudo docker build -t <image_name> .
-```
-and MongoDB
-```
-sudo docker run -p 27017:27017-v $(pwd)/persistence/mongoData:/data/db/ --name otus-db-distribution-database <image_name>
-```
-
-and NodeJS
-```
-sudo docker run -p 8080:8080 --env-file .env --name otus-db-distribution-api <image_name>
-```
-
-and NGINX
-```
-sudo docker run -p 80:80 -p 443:443 --name otus-db-distribution <image_name>
-```
-
-## Running the tests
-
-
-This project should have unit tests reaching at least 80% coverage.
-
-
-
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ccem-dev/db-distribution/tags). 
-
-## Authors
-
-See also the list of [contributors](https://github.com/ccem-dev/db-distribution/graphs/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
+# API - BUILD CONTAINER
+sudo docker run --network=db-network -p 53002:8080 --name db-api db-api

@@ -3,15 +3,13 @@ const mongoose = require("mongoose");
 const listEndpoints = require('express-list-endpoints');
 
 const {
-    MONGO_USERNAME,
-    MONGO_PASSWORD,
-    MONGO_HOSTNAME,
-    MONGO_PORT,
-    MONGO_DB,
-    API_PORT
+    DATABASE_USER,
+    DATABASE_PASSWORD,
+    DATABASE_HOSTNAME,
+    DATABASE_PORT
 } = process.env;
 
-const port = API_PORT || 8080;
+const port = 8080;
 
 const options = {
     useNewUrlParser: true,
@@ -21,12 +19,12 @@ const options = {
     connectTimeoutMS: 0 ,
     keepAlive: 1,
     auth: {
-        user: MONGO_USERNAME || "root",
-        password: MONGO_PASSWORD || "XRYs9yjU"
+        user: DATABASE_USER,
+        password: DATABASE_PASSWORD
     }
 };
 
-const url = `mongodb://${MONGO_HOSTNAME || "localhost"}:${MONGO_PORT || "27017"}/${MONGO_DB || "database-distribution"}?authSource=admin`;
+const url = `mongodb://${DATABASE_HOSTNAME}:${DATABASE_PORT}/db-distribution?authSource=db-distribution`;
 
 connect();
 

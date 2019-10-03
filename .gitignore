@@ -58,3 +58,5 @@ typings/
 .next
 .idea/
 .vscode/
+source/package-lock.json
+.*swp
