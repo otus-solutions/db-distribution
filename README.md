@@ -1,5 +1,5 @@
-# DATABASE - BUILD IMAGE
-sudo docker build --target database -t db-database .
+# NETWORK
+sudo docker network create -d bridge db-network
 
 # DATABASE - BUILD CONTAINER
 sudo docker run -v $(pwd)/persistence:/data/db --network=db-network -p 53001:27017 --name db-database db-database --wiredTigerCacheSizeGB='1.2'
