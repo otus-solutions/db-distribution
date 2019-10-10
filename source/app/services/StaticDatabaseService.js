@@ -15,7 +15,7 @@ module.exports = function (application) {
     return {
         uploadDatabase: async function (databaseCSV) {
             let endImport = new Promise(function (resolve, reject) {
-                exec('mongoimport -d database-distribution -c current_variables --type json --host ' + DATABASE_HOSTNAME + ':' + DATABASE_PORT + ' --file ' + databaseCSV.path + ' --numInsertionWorkers 6 --jsonArray -u ' + DATABASE_USER + ' -p ' + DATABASE_PASSWORD + '  --authenticationDatabase db-distribution',
+                exec('mongoimport -d db-distribution -c current_variables --type json --host ' + DATABASE_HOSTNAME + ':' + DATABASE_PORT + ' --file ' + databaseCSV.path + ' --numInsertionWorkers 6 --jsonArray -u ' + DATABASE_USER + ' -p ' + DATABASE_PASSWORD + '  --authenticationDatabase db-distribution',
                     async (err) => {
                         fs.unlinkSync(databaseCSV.path);
                         if (err) {
