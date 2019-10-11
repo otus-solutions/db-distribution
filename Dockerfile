@@ -16,7 +16,7 @@ WORKDIR /src
 ENV MEMORY 6144
 ENV DATABASE_USER="user"
 ENV DATABASE_PASSWORD="user"
-ENV DATABASE_HOSTNAME="db-database"
+ENV DATABASE_HOSTNAME="db-distribution-database"
 ENV DATABASE_PORT="27017"
 EXPOSE 8080
 RUN apk update && apk add --no-cache mongodb-tools
