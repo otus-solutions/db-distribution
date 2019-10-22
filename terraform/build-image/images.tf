@@ -23,10 +23,10 @@ variable "db-distribution-service-source" {
   default = "source"
 }
 variable "db-distribution-service-npminstall" {
-  default = "install --production"
+  default = "npm install --production"
 }
 variable "db-distribution-service-npmtest" {
-  default = "test"
+  default = "npm test"
 }
 ###############################################
 ###  DB-DISTRIBUTION : Build Image Database ###
@@ -43,7 +43,7 @@ resource "null_resource" "db-distribution-database" {
 resource "null_resource" "db-distribution-install" {
   provisioner "local-exec" {
     working_dir = "${var.db-distribution-service-source}"
-    command = "npm ${var.db-distribution-service-npminstall}"
+    command = "${var.db-distribution-service-npminstall}"
   }
 }
 
@@ -51,7 +51,7 @@ resource "null_resource" "db-distribution-test" {
   depends_on = [null_resource.db-distribution-install]
   provisioner "local-exec" {
     working_dir = "${var.db-distribution-service-source}"
-    command = "npm ${var.db-distribution-service-npmtest}"
+    command = "${var.db-distribution-service-npmtest}"
   }
 }
 resource "null_resource" "db-distribution-service" {
