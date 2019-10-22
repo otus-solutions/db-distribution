@@ -1,6 +1,9 @@
 ###############################################
 ###               Variables                 ###
 ###############################################
+variable "db-distribution-dockerfile" {
+  default = "."
+}
 variable "db-distribution-database-name" {
   default = "db-distribution-database"
 }
@@ -30,7 +33,7 @@ variable "db-distribution-service-npmtest" {
 ###############################################
 resource "null_resource" "db-distribution-database" {
   provisioner "local-exec" {
-    command = "docker build --target database -t ${var.db-distribution-database-name} ."
+    command = "docker build --target database -t ${var.db-distribution-database-name} ${var.db-distribution-dockerfile}"
   }
 }
 
@@ -54,6 +57,6 @@ resource "null_resource" "db-distribution-test" {
 resource "null_resource" "db-distribution-service" {
   depends_on = [null_resource.db-distribution-test]
   provisioner "local-exec" {
-    command = "docker build --target api -t ${var.db-distribution-service-name} ."
+    command = "docker build --target api -t ${var.db-distribution-service-name} ${var.db-distribution-dockerfile}"
   }
 }
