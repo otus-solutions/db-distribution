@@ -23,10 +23,13 @@ variable "db-distribution-service-source" {
   default = "source"
 }
 variable "db-distribution-service-npminstall" {
-  default = "npm install --production"
+  default = "npm install"
 }
 variable "db-distribution-service-npmtest" {
   default = "npm test"
+}
+variable "db-distribution-service-npmprune" {
+  default = "npm prune --production"
 }
 ###############################################
 ###  DB-DISTRIBUTION : Build Image Database ###
@@ -54,8 +57,17 @@ resource "null_resource" "db-distribution-test" {
     command = "${var.db-distribution-service-npmtest}"
   }
 }
-resource "null_resource" "db-distribution-service" {
+
+resource "null_resource" "db-distribution-prune" {
   depends_on = [null_resource.db-distribution-test]
+  provisioner "local-exec" {
+    working_dir = "${var.db-distribution-service-source}"
+    command = "${var.db-distribution-service-npmprune}"
+  }
+}
+
+resource "null_resource" "db-distribution-service" {
+  depends_on = [null_resource.db-distribution-prune]
   provisioner "local-exec" {
     command = "docker build --target api -t ${var.db-distribution-service-name} ${var.db-distribution-dockerfile}"
   }
