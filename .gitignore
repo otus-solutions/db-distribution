@@ -58,3 +58,11 @@ typings/
 .next
 .idea/
 .vscode/
+source/package-lock.json
+.*swp
+persistence/
+
+**/.terraform
+**/terraform.tfstate
+**/terraform.tfstate.backup
+

@@ -6,16 +6,16 @@ module.exports = function (application) {
     const StaticDatabase = application.app.models.StaticDatabase;
 
     const {
-        MONGO_USERNAME,
-        MONGO_PASSWORD,
-        MONGO_HOSTNAME,
-        MONGO_PORT
+        DATABASE_USER,
+        DATABASE_PASSWORD,
+        DATABASE_HOSTNAME,
+        DATABASE_PORT
     } = process.env;
 
     return {
         uploadDatabase: async function (databaseCSV) {
             let endImport = new Promise(function (resolve, reject) {
-                exec('mongoimport -d database-distribution -c current_variables --type json --host ' + MONGO_HOSTNAME + ':' + MONGO_PORT + ' --file ' + databaseCSV.path + ' --numInsertionWorkers 6 --jsonArray -u ' + MONGO_USERNAME + ' -p ' + MONGO_PASSWORD + '  --authenticationDatabase admin',
+                exec('mongoimport -d db-distribution -c current_variables --type json --host ' + DATABASE_HOSTNAME + ':' + DATABASE_PORT + ' --file ' + databaseCSV.path + ' --numInsertionWorkers 6 --jsonArray -u ' + DATABASE_USER + ' -p ' + DATABASE_PASSWORD + '  --authenticationDatabase db-distribution',
                     async (err) => {
                         fs.unlinkSync(databaseCSV.path);
                         if (err) {
