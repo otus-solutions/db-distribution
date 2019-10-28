@@ -1,10 +1,12 @@
 {
   "name": "db-distribution",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Node api for static database distribution",
   "main": "app.js",
   "scripts": {
-    "dev": "node --max-old-space-size=1024 --optimize-for-size app.js"
+    "dev": "node --max-old-space-size=1024 --optimize-for-size app.js",
+    "build": "ng build",
+    "production": "npm install && npm test && npm prune --production"
   },
   "keywords": [],
   "author": "",
