@@ -48,6 +48,7 @@ resource "docker_container" "db-distribution-service" {
   depends_on = [docker_container.db-distribution-database]
   name = "db-distribution-service"
   image = "${docker_image.db-distribution-service.name}"
+  restart = "on-failure"
   ports {
 	internal = 8080
 	external = "${var.db-distribution-service-port}"
