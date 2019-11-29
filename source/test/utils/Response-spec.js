@@ -2,7 +2,7 @@ describe('Response.js Tests', function () {
   var app, assert;
 
   beforeEach(function () {
-    app = require("../app/utils/Response.js");
+    app = require("../../app/utils/Response.js");
     assert = require('assert');
   });
 
