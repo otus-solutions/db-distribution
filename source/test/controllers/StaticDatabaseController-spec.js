@@ -1,9 +1,13 @@
 describe('StaticDatabaseController.js Tests', function () {
-  var controller, assert, chai, expect;
+  var app, assert, chai, expect;
 
   beforeEach(function () {
-    controller = require("../../app/controllers/StaticDatabaseController.js");
+    app = require("../../app/controllers/StaticDatabaseController.js");
   });
 
-  // TODO:
+  describe('', function () {
+    it('', function () {
+      console.log(app.getVariables());
+    });
+  });
 });
