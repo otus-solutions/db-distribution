@@ -3,13 +3,12 @@ describe('StaticDatabaseController.js Tests', function () {
 
   beforeEach(function () {
     application = require("../../config/server");
-
     ctrl = require("../../app/controllers/StaticDatabaseController.js")(application);
   });
 
   describe('', function () {
     it('', function () {
-      console.log(ctrl)
+      console.log(ctrl.getVariables)
     });
   });
 });
