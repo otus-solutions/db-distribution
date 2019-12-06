@@ -1,4 +1,4 @@
-describe('StaticDatabase.js Tests', function () {
+xdescribe('StaticDatabase.js Tests', function () {
   var app, mongoose, assert, chai, expect;
   var Mock = {};
 
