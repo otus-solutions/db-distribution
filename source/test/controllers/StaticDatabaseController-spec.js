@@ -1,5 +1,5 @@
 xdescribe('StaticDatabaseController.js Tests', function () {
-  var ctrl;
+  var ctrl, stub;
   var Mock = {};
   var Injections = [];
 
@@ -10,21 +10,26 @@ xdescribe('StaticDatabaseController.js Tests', function () {
   beforeEach(function () {
     application = require("../../config/server");
 
-    ctrl = require("../../app/controllers/StaticDatabaseController.js")(application);
+    Injections.StaticDatabaseService = require('../../app/services/StaticDatabaseService.js')(application);
+    Injections.VariableTypeCorrelationService = require('../../app/services/VariableTypeCorrelationService.js')(application);
 
+    ctrl = require('../../app/controllers/StaticDatabaseController.js')(application);
+  });
+
+  afterEach(() => {
+    sinon.restore()
   });
 
   describe('getVariables method', function () {
     var setNameSpy;
-    afterEach(() => {
-      sandbox.restore()
-    });
 
     it('shoul call getVariables method from StaticDatabaseService', function () {
-      sandbox.stub(ctrl, 'getVariables').returns({});
-      setNameSpy = sinon.spy(user, 'setName');
+      sinon.stub(Injections.StaticDatabaseService, 'getVariables').returns({});
 
-      ctrl.getVariables();
+      const result = ctrl.getVariables('', []);
+
+      expect(stub.calledOnce).to.be.true;
+
     });
   });
 
