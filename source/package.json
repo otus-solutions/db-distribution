@@ -9,7 +9,8 @@
     "dev": "node --max-old-space-size=1024 --optimize-for-size app.js",
     "gulp": "gulp",
     "start": "npm run gulp browser-sync",
-    "production": "npm install && npm test && npm prune --production"
+    "production": "npm install && npm test && npm prune --production",
+    "jest": "jest"
   },
   "nyc": {
     "include": [
@@ -40,10 +41,11 @@
     "multer": "1.4.1"
   },
   "devDependencies": {
-    "gulp": "3.9.1",
-    "mocha": "6.1.4",
     "chai": "4.2.0",
-    "sinon": "^7.5.0",
-    "nyc": "14.1.1"
+    "gulp": "3.9.1",
+    "jest": "^24.9.0",
+    "mocha": "6.1.4",
+    "nyc": "14.1.1",
+    "sinon": "^7.5.0"
   }
 }
