@@ -1,14 +1,20 @@
-describe('StaticDatabaseService.js Tests', () => {
-    let application, assert, chai, expect;
+describe('StaticDatabaseService_TestSuite', () => {
+    let application;
 
-    beforeEach(function () {
+    beforeEach(() => {
         application = require("../../config/server");
         service = require("../../app/services/StaticDatabaseService.js")(application);
     });
 
-    describe('', function () {
-        it('', function () {
-            console.log(service)
-        });
+    it('serviceExistence_check', () => {
+        expect(service).toBeDefined();
     });
+
+    it('serviceMethodsExistence_check', () => {
+        expect(service.uploadDatabase).toBeDefined();
+        expect(service.getVariables).toBeDefined();
+    });
+    //
+    // it('should ', () => { });
+
 });
