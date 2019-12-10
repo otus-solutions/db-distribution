@@ -10,7 +10,7 @@
     "gulp": "gulp",
     "start": "npm run gulp browser-sync",
     "production": "npm install && npm test && npm prune --production",
-    "jest": "jest"
+    "jest": "jest --watch --silent"
   },
   "nyc": {
     "include": [
