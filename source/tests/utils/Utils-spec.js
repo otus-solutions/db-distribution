@@ -1,4 +1,4 @@
-describe('Utils.js Tests', function () {
+xdescribe('Utils.js Tests', function () {
   var app, assert, chai, expect;
 
   beforeEach(function () {

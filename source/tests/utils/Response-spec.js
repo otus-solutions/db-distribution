@@ -1,4 +1,4 @@
-describe('Response.js Tests', function () {
+xdescribe('Response.js Tests', function () {
   var app, assert;
 
   beforeEach(function () {

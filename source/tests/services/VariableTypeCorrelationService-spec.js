@@ -3,8 +3,6 @@ describe('VariableTypeCorrelationService TestSuite', function () {
     let service, application;
     const Mock = {};
 
-
-
     beforeEach(function () {
         mocks();
 
@@ -22,7 +20,6 @@ describe('VariableTypeCorrelationService TestSuite', function () {
         expect(service).toBeDefined();
     });
 
-
     describe('updateVariableTypeCorrelation method', function () {
         test('should call updateVariableTypeCorrelation method from VariableTypeCorrelation', async () => {
             jest.spyOn(Mock.fs,'readFileSync').mockImplementation(()=>'[{"test":"text"}]');
@@ -30,11 +27,12 @@ describe('VariableTypeCorrelationService TestSuite', function () {
             jest.spyOn(Mock.fs,'unlinkSync').mockImplementation(()=> true);
             jest.spyOn(Mock.Response,'success').mockImplementation(()=> Promise.resolve("Ok"));
 
-            expect.assertions(2);
+            expect.assertions(3);
             const result = await service.uploadVariableTypeCorrelation(Mock.variableTypeCorrelationJson);
 
             expect(service.uploadVariableTypeCorrelation).toBeDefined();
             expect(result).toHaveLength(2);
+            expect(result).toEqual('Ok');
 
         });
 
@@ -47,8 +45,8 @@ describe('VariableTypeCorrelationService TestSuite', function () {
                 await service.uploadVariableTypeCorrelation(Mock.variableTypeCorrelationJson);
             } catch (e) {
                 expect.assertions(2);
-                expect(e.body.data.message).toBe("There was an error. Please try again later.");
-                expect(e.code).toBe(500);
+                expect(e.body.data.message).toEqual("There was an error. Please try again later.");
+                expect(e.code).toEqual(500);
             }
 
         });
