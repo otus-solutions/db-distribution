@@ -16,12 +16,12 @@ describe('VariableTypeCorrelationService TestSuite', function () {
 
     });
 
-    test('service should defined', function () {
+    it('service should defined', function () {
         expect(service).toBeDefined();
     });
 
-    describe('updateVariableTypeCorrelation method', function () {
-        test('should call updateVariableTypeCorrelation method from VariableTypeCorrelation', async () => {
+    describe('uploadVariableTypeCorrelation method', function () {
+        it('should call updateVariableTypeCorrelation method from VariableTypeCorrelation', async () => {
             jest.spyOn(Mock.fs,'readFileSync').mockImplementation(()=>'[{"test":"text"}]');
             jest.spyOn(Mock.VariableTypeCorrelation,'updateVariableTypeCorrelation').mockImplementation(()=>'{"test":"text"}' );
             jest.spyOn(Mock.fs,'unlinkSync').mockImplementation(()=> true);
@@ -36,7 +36,7 @@ describe('VariableTypeCorrelationService TestSuite', function () {
 
         });
 
-        test('should call updateVariableTypeCorrelation method and return error', async () => {
+        it('should call uploadVariableTypeCorrelation method and return error', async () => {
             jest.spyOn(Mock.fs,'readFileSync').mockImplementation(()=>'[{"test":"text"}]' );
             jest.spyOn(Mock.VariableTypeCorrelation,'updateVariableTypeCorrelation').mockImplementation(()=>'{"test":"text"}' );
             // jest.spyOn(Response,'internalServerError').mockImplementation(()=> "failed");
