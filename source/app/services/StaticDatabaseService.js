@@ -21,7 +21,6 @@ module.exports = function (application) {
                         if (err) {
                             reject(err);
                         } else {
-                            console.log('here3');
                             try {
                                 let dbPromises = await StaticDatabase.correctCurrentVariables();
                                 await Promise.all(dbPromises);
