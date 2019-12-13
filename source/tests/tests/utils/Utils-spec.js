@@ -19,8 +19,7 @@ describe('Utils_UnitTest_Suite', () => {
                 .toBe(Mock.fileContainer[0]);
     });
 
-
-    it('unitTest: Method validateFileContainer should promiseRejected with required field information', async() => {
+    it('unitTest: Method validateFileContainer should return promiseRejected with required field information', async() => {
         try {
             console.log(await utils.validateFileContainer(null, Mock.ext));
         }
@@ -30,12 +29,11 @@ describe('Utils_UnitTest_Suite', () => {
         }
     });
 
-    it('unitTest: Method validateFileContainer should promiseRejected with invalid file type', async() => {
+    it('unitTest: Method validateFileContainer should return promiseRejected because of invalidFileType', async() => {
         try {
             console.log(await utils.validateFileContainer(Mock.fileContainer, "mock"));
         }
         catch (e) {
-            console.log(e)
             expect(e.code).toBe(406)
             expect(e.body.data.data).toBe( 'The databaseJson field is required');
         }
