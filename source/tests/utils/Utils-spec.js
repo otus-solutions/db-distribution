@@ -1,35 +1,42 @@
-xdescribe('Utils.js Tests', function () {
-  var app, assert, chai, expect;
+describe('Utils_UnitTest_Suite', () => {
 
-  beforeEach(function () {
-    app = require('../../app/utils/Utils.js');
-    assert = require('assert');
-    chai = require('chai');
-    expect = chai.expect;
-  });
+    const Mock = {};
+    Mock.fileContainer =  [{originalname: "source/app/utils/Utils.js"}, {error: "MockError"}];
+    Mock.ext = ".js";
 
-  describe('validateFileContainer method', function () {
-    it('should not throw error if parameters are well defined', function () {
-      try {
-        app.validateFileContainer([{ 'originalname': '/api/upload/database/file.json' }], '.json');
-      } catch (e) { }
+    const utils = require("../../app/utils/Utils.js")
+
+    it('unitTest: utilsExistence check', () => {
+        expect(utils).toBeDefined();
     });
 
-    it('should throw error when parameters is not defined', function () {
-      try {
-        app.validateFileContainer();
-      } catch (e) {
-        assert(e.message === 'The databaseJson field is required');
-      }
+    it('unitTest: utilsMethodsExistence check', () => {
+        expect(utils.validateFileContainer).toBeDefined();
     });
 
-    it('should throw error when parameters are not well defined', function () {
-      try {
-        app.validateFileContainer([{ 'originalname': '/api/upload/database/file.txt' }], '.json');
-      } catch (e) {
-        assert(e.message === 'Malformed recruitment number');
-      }
+    it('unitTest: Method validateFileContainer should return promiseResolved with first element of fileContainer', async() => {
+            expect(await utils.validateFileContainer(Mock.fileContainer, Mock.ext))
+                .toBe(Mock.fileContainer[0]);
     });
-  });
 
+    it('unitTest: Method validateFileContainer should return promiseRejected with required field information', async() => {
+        try {
+            console.log(await utils.validateFileContainer(null, Mock.ext));
+        }
+        catch (e) {
+            expect(e.code).toBe(406)
+            expect(e.body.data.data).toBe("The databaseJson field is required")
+        }
+    });
+
+    it('unitTest: Method validateFileContainer should return promiseRejected because of invalidFileType', async() => {
+        try {
+            console.log(await utils.validateFileContainer(Mock.fileContainer, "mock"));
+        }
+        catch (e) {
+            expect(e.code).toBe(406)
+            expect(e.body.data.data).toBe( 'The databaseJson field is required');
+        }
+    });
 });
+
