@@ -1,59 +1,79 @@
-xdescribe('Response.js Tests', function () {
-  var app, assert;
+describe('Response.js Tests', () => {
+  const responseApp = require("../../app/utils/Response");
 
-  beforeEach(function () {
-    app = require("../../app/utils/Response.js");
-    assert = require('assert');
+  it('unitTest: response module existence check', () => {
+    expect(responseApp).toBeDefined();
+  });
+  
+  it('unitTest: method success defined check ', () => {
+    expect(responseApp.success).toBeDefined();
   });
 
-  it('should success response', function () {
-    let body = { teste: null };
-    let valueCustom = app.success(body);
-    assert.equal(valueCustom.code, 200);
-    assert.equal(valueCustom.body.data, body);
-
-    let valueDefault = app.success();
-    assert.equal(valueDefault.code, 200);
-    assert.equal(valueDefault.body.data, true);
-
+  it('unitTest: method notAcceptable defined check', () => {
+    expect(responseApp.notAcceptable).toBeDefined();
   });
 
-  it('should notAcceptable response', function () {
+  it('unitTest: method internalServerError defined check', () => {
+    expect(responseApp.internalServerError).toBeDefined();
+  });
+
+  it('unitTest: method notFound defined check', () => {
+    expect(responseApp.notFound).toBeDefined();
+  });
+
+  it('unitTest: should success response with body parameter', function () {
     let body = { teste: null };
+    let valueCustom = responseApp.success(body);
+    expect(valueCustom.code).toBe(200);
+    expect(valueCustom.body.data).toBe(body);
+  });
+
+  it('unitTest: should success response with no body parameter', function () {
+    let valueDefault = responseApp.success();
+    expect(valueDefault.code).toBe(200);
+    expect(valueDefault.body.data).toBe(true);
+  });
+
+  it('unitTest: should notAcceptable response with body parameter', function () {
+    let body = { teste: null };
+    let valueCustom = responseApp.notAcceptable(body);
+    expect(valueCustom.code).toBe(406);
+    expect(valueCustom.body.data).toBe(body);
+  });
+
+  it('unitTest: should notAcceptable response with no body parameter', function () {
+    let valueDefault = responseApp.notAcceptable();
     let bodyDefault = { message: "Value not acceptable" };
-    let valueCustom = app.notAcceptable(body);
-    assert.equal(valueCustom.code, 406);
-    assert.equal(valueCustom.body.data, body);
-
-    let valueDefault = app.notAcceptable();
-    assert.equal(valueDefault.code, 406);
-    assert.deepEqual(valueDefault.body.data, bodyDefault);
-
+    expect(valueDefault.code).toBe(406);
+    expect(valueDefault.body.data).toMatchObject(bodyDefault);
   });
 
-  it('should internalServerError response', function () {
+  it('unitTest: should internalServerError response with body parameter', function () {
     let body = { teste: null };
-    let bodyDefault = { message: "There was an error. Please try again later." }
-    let valueCustom = app.internalServerError(body);
-    assert.equal(valueCustom.code, 500);
-    assert.equal(valueCustom.body.data, body);
-
-    let valueDefault = app.internalServerError();
-    assert.equal(valueDefault.code, 500);
-    assert.deepEqual(valueDefault.body.data, bodyDefault);
-
+    let valueCustom = responseApp.internalServerError(body);
+    expect(valueCustom.code).toBe(500);
+    expect(valueCustom.body.data).toBe(body);
   });
 
-  it('should notFound response', function () {
+  it('unitTest: should internalServerError response with no body parameter', function () {
+    let bodyDefault = { message: "There was an error. Please try again later." };
+    let valueDefault = responseApp.internalServerError();
+    expect(valueDefault.code).toBe(500);
+    expect(valueDefault.body.data).toMatchObject(bodyDefault);
+  });
+
+  it('unitTest: should notFound response with body parameter', function () {
     let body = { teste: null };
+    let valueCustom = responseApp.notFound(body);
+    expect(valueCustom.code).toBe(404);
+    expect(valueCustom.body.data).toBe(body);
+  });
+
+  it('unitTest: should notFound response with no body parameter', function () {
     let bodyDefault = { message: "Data not found" };
-    let valueCustom = app.notFound(body);
-    assert.equal(valueCustom.code, 404);
-    assert.equal(valueCustom.body.data, body);
-
-    let valueDefault = app.notFound();
-    assert.equal(valueDefault.code, 404);
-    assert.deepEqual(valueDefault.body.data, bodyDefault);
+    let valueDefault = responseApp.notFound();
+    expect(valueDefault.code).toBe(404);
+    expect(valueDefault.body.data).toMatchObject(bodyDefault);
   });
 
 });
