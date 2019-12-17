@@ -89,6 +89,7 @@ module.exports.correctCurrentVariables = () => {
             });
     });
 };
+
 module.exports.getVariables = async (identification, variables) => {
     let getCurrentVariables = this.getCurrentVariables;
     let getOldVariables = this.getOldVariables;
