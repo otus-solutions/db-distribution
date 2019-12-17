@@ -4,7 +4,7 @@
   "description": "Node api for static database distribution",
   "main": "app.js",
   "scripts": {
-    "test": "jest --watchAll --coverage --silent",
+    "test": "jest --coverage --silent",
     "unit": "jest tests/**/*.js",
     "dev": "node --max-old-space-size=1024 --optimize-for-size app.js",
     "gulp": "gulp",
