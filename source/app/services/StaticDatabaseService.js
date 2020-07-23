@@ -33,17 +33,17 @@ module.exports = function (application) {
                     });
             });
 
-            return endImport.then(()=>{
+            return endImport.then(() => {
                 return Response.success();
-            }).catch((e)=>{
+            }).catch((e) => {
                 console.log(e);
                 throw Response.internalServerError();
             });
         },
-        getVariables:async function (identification, variables) {
+        getVariables: async function (identification, variables) {
             try {
                 let foundVariables = await StaticDatabase.getVariables(identification, variables);
-                return Response.success({variables:foundVariables} )
+                return Response.success({variables: foundVariables})
             } catch (e) {
                 console.log(e);
                 throw Response.internalServerError();
@@ -51,4 +51,3 @@ module.exports = function (application) {
         }
     };
 };
-
